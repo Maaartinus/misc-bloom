@@ -1,5 +1,3 @@
-import java.security.SecureRandom;
-import java.util.Arrays;
 import java.util.Random;
 
 import com.google.common.base.Predicate;
@@ -61,7 +59,7 @@ public class BloomTest extends TestCase {
 
 	private void printStats(boolean variant) {
 		System.out.println("variant\tlog2\tInsertions\tFalse positives\t(%)");
-		for (int log2=26; log2<=27; log2++) {
+		for (int log2=10; log2<=25; log2+=3) {
 			final int capacity = 1<<log2;
 
 			final int randomSeed = 0x23456789;
@@ -79,6 +77,6 @@ public class BloomTest extends TestCase {
 	}
 
 	private Random newRandom() {
-		return new Random(3334);
+		return new Random(31334);
 	}
 }

@@ -116,7 +116,7 @@ public final class CaffeinBloomFilter3 implements CaffeinBloomFilter {
 	}
 
 	private void setTwo(long e) {
-		table[index(e)] |= firstBitmask(e) | secondBitmask(e);
+		table[index(e)] |= (Long.MIN_VALUE >>> e) | (Long.MIN_VALUE >>> altShiftDistance(e));
 	}
 
 	private boolean getTwo(long e) {
@@ -127,14 +127,6 @@ public final class CaffeinBloomFilter3 implements CaffeinBloomFilter {
 
 	private int index(long e) {
 		return (int) (e >>> tableShift);
-	}
-
-	private long firstBitmask(long e) {
-		return Long.MIN_VALUE >>> e;
-	}
-
-	private long secondBitmask(long e) {
-		return Long.MIN_VALUE >>> altShiftDistance(e);
 	}
 
 	private long altShiftDistance(long e) {
