@@ -92,9 +92,10 @@ public final class CaffeinBloomFilter3 implements CaffeinBloomFilter {
 		e = spread(e);
 		if (!getTwo(e)) return false;
 		e = respread(e);
-		if (!getOne(e)) return false;
-		e = respread(e);
-		if (!getOne(e)) return false;
+		if (!getTwo(e)) return false;
+		//		if (!getOne(e)) return false;
+		//		e = respread(e);
+		//		if (!getOne(e)) return false;
 		//		e = respread(e);
 		//		if (!getOne(e)) return false;
 		//		e = respread(e);
@@ -118,9 +119,10 @@ public final class CaffeinBloomFilter3 implements CaffeinBloomFilter {
 		e = spread(e);
 		setTwo(e);
 		e = respread(e);
-		setOne(e);
-		e = respread(e);
-		setOne(e);
+		setTwo(e);
+		//		setOne(e);
+		//		e = respread(e);
+		//		setOne(e);
 		//		e = respread(e);
 		//		setOne(e);
 		//		e = respread(e);
@@ -128,31 +130,31 @@ public final class CaffeinBloomFilter3 implements CaffeinBloomFilter {
 	}
 
 	private void setOne(long e) {
-		final int index = (int) (e >>> tableShift);
-		table[index] |= bitmaskOne(e);
+		table[index(e)] |= firstBitmask(e);
 	}
 
 	private boolean getOne(long e) {
-		final int index = (int) (e >>> tableShift);
-		return (table[index] & bitmaskOne(e)) != 0;
+		return (table[index(e)] & firstBitmask(e)) != 0;
 	}
 
 	private void setTwo(long e) {
-		final int index = (int) (e >>> tableShift);
-		table[index] |= bitmaskOne(e) | bitmaskTwo(e);
+		table[index(e)] |= firstBitmask(e) | secondBitmask(e);
 	}
 
 	private boolean getTwo(long e) {
-		final int index = (int) (e >>> tableShift);
-		final long entry = table[index];
-		return (entry & bitmaskOne(e)) != 0 && (entry & bitmaskTwo(e)) != 0;
+		final long entry = table[index(e)];
+		return (entry & firstBitmask(e)) != 0 && (entry & secondBitmask(e)) != 0;
 	}
 
-	private long bitmaskOne(long e) {
+	private int index(long e) {
+		return (int) (e >>> tableShift);
+	}
+
+	private long firstBitmask(long e) {
 		return 1L << e;
 	}
 
-	private long bitmaskTwo(long e) {
+	private long secondBitmask(long e) {
 		return 1L << (e >> BITS_PER_LONG_SHIFT);
 	}
 

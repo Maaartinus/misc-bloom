@@ -46,13 +46,13 @@ public class BloomTest extends TestCase {
 		printStats(false);
 	}
 
-	public void testBloomFilter2() {
+	public void testBloomFilter3() {
 		printStats(true);
 	}
 
 	private void printStats(boolean variant) {
 		System.out.println("variant\tlog2\tInsertions\tFalse positives\t(%)");
-		for (int log2=20; log2<=24; log2++) {
+		for (int log2=26; log2<=27; log2++) {
 			final int capacity = 1<<log2;
 
 			final int randomSeed = 0x23456789;
@@ -64,33 +64,11 @@ public class BloomTest extends TestCase {
 			final int falsePositives = falsePositives(bf, newRandom(), capacity, new MyPredicate());
 
 			System.out.format("%6s\t%3d\t%9d\t%7d\t(%6.3f%%)\n",
-					variant, log2, capacity, falsePositives,
-					((float) falsePositives / capacity) * 100);
+					variant, log2, capacity, falsePositives, 100.0 * falsePositives / capacity);
 		}
 	}
 
 	private Random newRandom() {
-		return new Random(1);
-	}
-
-	private long[] newRandomLongArray(int length, Random random) {
-		final long[] result = new long[length];
-		for (int i=0; i<length; ++i) {
-			result[i] = random.nextLong();
-		}
-
-		// Reduce duplicates.
-		Arrays.sort(result);
-		for (int i=1; i<length; ++i) {
-			// Replace duplicates by new values, probably non-duplicates.
-			if (result[i] == result[i-1]) result[i] = random.nextLong();
-		}
-		for (int i=length-1; i>0; i--) {
-			final int j = random.nextInt(i+1);
-			final long temp = result[i];
-			result[i] = result[j];
-			result[j] = temp;
-		}
-		return result;
+		return new Random(2);
 	}
 }
