@@ -55,7 +55,6 @@ public final class CaffeinBloomFilter3 implements CaffeinBloomFilter {
 	 */
 	public CaffeinBloomFilter3(@Nonnegative long expectedInsertions, int randomSeed) {
 		this.randomSeed = 2*randomSeed + 1;
-		checkArgument(randomSeed != 0);
 		ensureCapacity(expectedInsertions);
 	}
 
@@ -138,7 +137,7 @@ public final class CaffeinBloomFilter3 implements CaffeinBloomFilter {
 	 * hash functions.
 	 */
 	long spread(long e) {
-		e ^= (e >>> 21) ^ (e >>> 41);
+		e ^= (e >>> 21) ^ (e >>> 41); // On a typical superscalar CPU it doesn't take longer than xoring with a single shift.
 		e *= 0xc3a5c85c97cb3127L;
 		e ^= (e >>> 21) ^ (e >>> 41);
 		e *= randomSeed;
@@ -146,6 +145,9 @@ public final class CaffeinBloomFilter3 implements CaffeinBloomFilter {
 		return e;
 	}
 
+	/**
+	 * A simpler version of {@link spread}.
+	 */
 	private long respread(long e) {
 		e *= 0xb492b66fbe98f273L;
 		e ^= (e >>> 21) ^ (e >>> 41);

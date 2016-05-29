@@ -59,7 +59,7 @@ public class BloomTest extends TestCase {
 
 	private void printStats(boolean variant) {
 		System.out.println("variant\tlog2\tInsertions\tFalse positives\t(%)");
-		for (int log2=10; log2<=25; log2+=3) {
+		for (int log2=10; log2<=28; log2+=3) {
 			final int capacity = 1<<log2;
 
 			final int randomSeed = 0x23456789;
@@ -68,7 +68,7 @@ public class BloomTest extends TestCase {
 			: new CaffeinBloomFilter1(capacity, randomSeed);
 
 			fill(bf, newRandom(), capacity, new MyPredicate());
-			checkNoFalseNegatives(bf, newRandom(), capacity, new MyPredicate());
+			//			checkNoFalseNegatives(bf, newRandom(), capacity, new MyPredicate());
 			final int falsePositives = falsePositives(bf, newRandom(), capacity, new MyPredicate());
 
 			System.out.format("%6s\t%3d\t%9d\t%7d\t(%6.3f%%)\n",
@@ -77,6 +77,6 @@ public class BloomTest extends TestCase {
 	}
 
 	private Random newRandom() {
-		return new Random(31334);
+		return new Random(7547390);
 	}
 }
