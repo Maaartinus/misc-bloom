@@ -42,6 +42,15 @@ public class BloomTest extends TestCase {
 		return result;
 	}
 
+	private void checkNoFalseNegatives(CaffeinBloomFilter filter, Random random, int count, Predicate<Long> predicate) {
+		while (count>0) {
+			final long x = random.nextLong();
+			if (!predicate.apply(x)) continue;
+			assertTrue(filter.mightContain(x));
+			--count;
+		}
+	}
+
 	public void testBloomFilter1() {
 		printStats(false);
 	}
@@ -61,6 +70,7 @@ public class BloomTest extends TestCase {
 			: new CaffeinBloomFilter1(capacity, randomSeed);
 
 			fill(bf, newRandom(), capacity, new MyPredicate());
+			checkNoFalseNegatives(bf, newRandom(), capacity, new MyPredicate());
 			final int falsePositives = falsePositives(bf, newRandom(), capacity, new MyPredicate());
 
 			System.out.format("%6s\t%3d\t%9d\t%7d\t(%6.3f%%)\n",
@@ -69,6 +79,6 @@ public class BloomTest extends TestCase {
 	}
 
 	private Random newRandom() {
-		return new Random(2);
+		return new Random(3334);
 	}
 }

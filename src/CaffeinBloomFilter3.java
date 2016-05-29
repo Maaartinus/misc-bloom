@@ -93,13 +93,6 @@ public final class CaffeinBloomFilter3 implements CaffeinBloomFilter {
 		if (!getTwo(e)) return false;
 		e = respread(e);
 		if (!getTwo(e)) return false;
-		//		if (!getOne(e)) return false;
-		//		e = respread(e);
-		//		if (!getOne(e)) return false;
-		//		e = respread(e);
-		//		if (!getOne(e)) return false;
-		//		e = respread(e);
-		//		if (!getOne(e)) return false;
 		return true;
 	}
 
@@ -120,21 +113,6 @@ public final class CaffeinBloomFilter3 implements CaffeinBloomFilter {
 		setTwo(e);
 		e = respread(e);
 		setTwo(e);
-		//		setOne(e);
-		//		e = respread(e);
-		//		setOne(e);
-		//		e = respread(e);
-		//		setOne(e);
-		//		e = respread(e);
-		//		setOne(e);
-	}
-
-	private void setOne(long e) {
-		table[index(e)] |= firstBitmask(e);
-	}
-
-	private boolean getOne(long e) {
-		return (table[index(e)] & firstBitmask(e)) != 0;
 	}
 
 	private void setTwo(long e) {
@@ -143,7 +121,8 @@ public final class CaffeinBloomFilter3 implements CaffeinBloomFilter {
 
 	private boolean getTwo(long e) {
 		final long entry = table[index(e)];
-		return (entry & firstBitmask(e)) != 0 && (entry & secondBitmask(e)) != 0;
+		final long result = (entry << e) & (entry << altShiftDistance(e));
+		return result < 0;
 	}
 
 	private int index(long e) {
@@ -151,11 +130,15 @@ public final class CaffeinBloomFilter3 implements CaffeinBloomFilter {
 	}
 
 	private long firstBitmask(long e) {
-		return 1L << e;
+		return Long.MIN_VALUE >>> e;
 	}
 
 	private long secondBitmask(long e) {
-		return 1L << (e >> BITS_PER_LONG_SHIFT);
+		return Long.MIN_VALUE >>> altShiftDistance(e);
+	}
+
+	private long altShiftDistance(long e) {
+		return e >> BITS_PER_LONG_SHIFT;
 	}
 
 	/**
