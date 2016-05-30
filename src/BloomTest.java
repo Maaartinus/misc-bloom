@@ -59,7 +59,7 @@ public class BloomTest extends TestCase {
 
 	private void printStats(boolean variant) {
 		System.out.println("variant\tlog2\tInsertions\tFalse positives\t(%)");
-		for (int log2=10; log2<=28; log2+=3) {
+		for (int log2=13; log2<=29; log2+=4) {
 			final int capacity = 1<<log2;
 
 			final int randomSeed = 0x23456789;
@@ -77,6 +77,6 @@ public class BloomTest extends TestCase {
 	}
 
 	private Random newRandom() {
-		return new Random(7547390);
+		return new Random(9599);
 	}
 }

@@ -146,7 +146,7 @@ public final class CaffeinBloomFilter3 implements CaffeinBloomFilter {
 	}
 
 	/**
-	 * A simpler version of {@link spread}.
+	 * A simpler version of {@link #spread(long)}.
 	 */
 	private long respread(long e) {
 		e *= 0xb492b66fbe98f273L;
