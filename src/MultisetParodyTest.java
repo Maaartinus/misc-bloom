@@ -5,10 +5,14 @@ public class MultisetParodyTest extends TestCase {
 	private static class Consumer<E> implements MultisetParody.MultisetParodyConsumer<E> {
 		@Override public void accept(E e, int count) {
 			System.out.println(e + " -> " + count);
+			invocations++;
 		}
+
+		int invocations;
 	}
 
 	MultisetParody<String> parody = new MultisetParody<>(1);
+	private final Consumer<String> consumer = new Consumer<String>();
 
 	public void testAdd1() {
 		System.out.println("\n*testAdd1");
@@ -19,7 +23,8 @@ public class MultisetParodyTest extends TestCase {
 		for (int i = 0; i < 25; i++) {
 			parody.add("a");
 		}
-		parody.drainTo(new Consumer<String>());
+		parody.drainTo(consumer);
+		assertTrue(consumer.invocations <= 3);
 	}
 
 	public void testAdd2() {
@@ -28,7 +33,8 @@ public class MultisetParodyTest extends TestCase {
 			parody.add("a");
 			parody.add("b");
 		}
-		parody.drainTo(new Consumer<String>());
+		parody.drainTo(consumer);
+		assertTrue(consumer.invocations <= 6);
 	}
 
 	public void testAdd3() {
@@ -38,7 +44,8 @@ public class MultisetParodyTest extends TestCase {
 			parody.add("b");
 			parody.add("c");
 		}
-		parody.drainTo(new Consumer<String>());
+		parody.drainTo(consumer);
+		assertTrue(consumer.invocations <= 6);
 	}
 
 	public void testAdd4() {
@@ -49,7 +56,8 @@ public class MultisetParodyTest extends TestCase {
 			parody.add("a");
 			parody.add("c");
 		}
-		parody.drainTo(new Consumer<String>());
+		parody.drainTo(consumer);
+		assertTrue(consumer.invocations <= 6);
 	}
 }
 
