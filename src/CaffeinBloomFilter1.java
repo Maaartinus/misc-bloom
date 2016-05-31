@@ -17,15 +17,10 @@
 
 import static com.google.common.base.Preconditions.checkArgument;
 
-import java.math.RoundingMode;
 import java.util.Arrays;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.concurrent.NotThreadSafe;
-
-import com.google.common.math.IntMath;
-
-import de.grajcar.dout.Dout;
 
 /**
  * A Bloom filter is a space and time efficient probabilistic data structure that is used to test
@@ -96,6 +91,7 @@ public final class CaffeinBloomFilter1 implements CaffeinBloomFilter {
 	 * @param e the element whose presence is to be tested
 	 * @return if the element might be present
 	 */
+	@Override
 	public boolean mightContain(long e) {
 		final int item = spread(Long_hashCode(e));
 		for (int i = 0; i < 4; i++) {
@@ -119,6 +115,7 @@ public final class CaffeinBloomFilter1 implements CaffeinBloomFilter {
 	 *
 	 * @param e the element to add
 	 */
+	@Override
 	public void put(long e) {
 		final int item = spread(Long_hashCode(e));
 		setAt(item, 0);
