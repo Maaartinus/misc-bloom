@@ -6,5 +6,6 @@
 	<classpathentry kind="lib" path="/lib/repo/com.google.code.findbugs/jsr305/2.0.1/516c03b21d50a644d538de0f0369c620989cd8f0/jsr305-2.0.1.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/3"/>
 	<classpathentry kind="lib" path="/lib/own/fmt.jar" sourcepath="/fmt"/>
+	<classpathentry kind="lib" path="/lib/repo/org.projectlombok/lombok/1.16.8/2ce9de13f277ec1600e7e04231477e3e5f59d317/lombok-1.16.8.jar" sourcepath="/lib/repo/org.projectlombok/lombok/1.16.8/2fd87e8ef9e3be1a28da1d6eaa98847a6b35906d/lombok-1.16.8-sources.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
