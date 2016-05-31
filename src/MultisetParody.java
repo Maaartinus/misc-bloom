@@ -13,7 +13,6 @@ public class MultisetParody<E> {
 
 	// One index is enough, also for RunLengthConsumer.
 	private int index;
-	private int maxIndex = -1;
 
 	/**
 	 * @param initialCapacity must be a pwer of two.
@@ -52,13 +51,11 @@ public class MultisetParody<E> {
 		if (array[i] == null) {
 			array[i] = e;
 			count[i] = 1;
-			maxIndex = Math.max(maxIndex, i);
 			return;
 		}
 		if (array[j] == null) {
 			array[j] = e;
 			count[j] = 1;
-			maxIndex = Math.max(maxIndex, j);
 			return;
 		}
 
@@ -85,9 +82,8 @@ public class MultisetParody<E> {
 
 	public void drainTo(@Nonnull MultisetParodyConsumer<E> consumer) {
 		requireNonNull(consumer);
-		maxIndex = Math.max(maxIndex, index);
 
-		for (int i = 0; i <= maxIndex; i++) {
+		for (int i = 0; i <= index; i++) {
 			@SuppressWarnings("unchecked")
 			final E e = (E) array[i];
 			if (e == null) continue;
@@ -100,7 +96,6 @@ public class MultisetParody<E> {
 		}
 
 		index = 0;
-		maxIndex = -1;
 	}
 
 	interface MultisetParodyConsumer<E> {
