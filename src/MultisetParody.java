@@ -3,11 +3,10 @@ import static java.util.Objects.requireNonNull;
 
 import java.util.Arrays;
 
-public class MultisetParody<E> {
-	// Just to get rid of the red markers.
-	private @interface Nonnegative {}
-	private @interface Nonnull {}
+import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
 
+public class MultisetParody<E> {
 	private Object[] array;
 	private int[] count;
 

@@ -22,10 +22,17 @@ package frequency;
  */
 public interface Frequency {
 
-	/** Returns the estimated number of times the element was seen. */
+	/**
+	 * Returns the estimated number of times the element was seen.
+	 * @param e Already spreaded hash of the input.
+	 */
 	int frequency(long e);
 
-	/** Increments the popularity of the element. */
+	/**
+	 * Increments the popularity of the element.
+	 * @param e Already spreaded hash of the input.
+	 * @param count The amount to be added.
+	 */
 	void increment(long e, int count);
 }
 
